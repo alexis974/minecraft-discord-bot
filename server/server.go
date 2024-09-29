@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -13,7 +12,7 @@ func GetServerInfo(serverName string) MCServerInfo {
 	response, err := http.Get("http://api.mcsrvstat.us/3/" + serverName)
 
 	if err != nil {
-		fmt.Print(err.Error())
+		log.Println(err)
 		os.Exit(1)
 	}
 
