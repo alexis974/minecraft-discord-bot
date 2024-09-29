@@ -13,9 +13,8 @@ import (
 )
 
 func watchOnlinePlayer(discord *discordgo.Session) {
-	ticker := time.NewTicker(5 * time.Second) // Set up a ticker for every 2 minutes
-	// ticker := time.NewTicker(2 * time.Minute) // Set up a ticker for every 2 minutes
-	defer ticker.Stop() // Ensure the ticker stops when the function ends
+	ticker := time.NewTicker(2 * time.Minute) // Set up a ticker for every 2 minutes
+	defer ticker.Stop()                       // Ensure the ticker stops when the function ends
 
 	channelID, err := findChannelID(discord)
 	if err != nil {
