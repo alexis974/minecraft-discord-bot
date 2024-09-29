@@ -1,2 +1,5 @@
 .env
 *.json
+
+# Binary file
+minecraft-discord-bot
