@@ -71,12 +71,6 @@ func getOldPlayersInfo(filePath string) server.PlayersInfo {
 	return playersInfo
 }
 
-// PlayerStatus holds the information of players who joined or left
-type PlayerStatus struct {
-	Joined []server.Player
-	Left   []server.Player
-}
-
 // Check if a player exists in the list by Uuid
 func playerExists(player server.Player, players []server.Player) bool {
 	for _, p := range players {
@@ -85,6 +79,32 @@ func playerExists(player server.Player, players []server.Player) bool {
 		}
 	}
 	return false
+}
+
+// PlayerStatus holds the information of players who joined or left
+type PlayerStatus struct {
+	Joined []server.Player
+	Left   []server.Player
+}
+
+func getPlayersStatus(oldPlayersInfo server.PlayersInfo, currentPlayersInfo server.PlayersInfo) PlayerStatus {
+	var playerStatus PlayerStatus
+
+	// Find players who joined
+	for _, player := range currentPlayersInfo.List {
+		if !playerExists(player, oldPlayersInfo.List) {
+			playerStatus.Joined = append(playerStatus.Joined, player)
+		}
+	}
+
+	// Find players who left
+	for _, player := range oldPlayersInfo.List {
+		if !playerExists(player, currentPlayersInfo.List) {
+			playerStatus.Left = append(playerStatus.Left, player)
+		}
+	}
+
+	return playerStatus
 }
 
 func checkOnlinePlayer(discord *discordgo.Session, channelID string) {
@@ -99,31 +119,17 @@ func checkOnlinePlayer(discord *discordgo.Session, channelID string) {
 		return
 	}
 
-	var joined, left []server.Player
-
-	// Find players who joined
-	for _, player := range currentPlayersInfo.List {
-		if !playerExists(player, oldPlayersInfo.List) {
-			joined = append(joined, player)
-		}
-	}
-
-	// Find players who left
-	for _, player := range oldPlayersInfo.List {
-		if !playerExists(player, currentPlayersInfo.List) {
-			left = append(left, player)
-		}
-	}
+	playerStatus := getPlayersStatus(oldPlayersInfo, currentPlayersInfo)
 
 	// Notify for every player that joined
-	for _, player := range joined {
+	for _, player := range playerStatus.Joined {
 		msg := player.Name + " joined the game !"
 		log.Println(msg)
 		sendMessage(discord, channelID, msg)
 	}
 
 	// Notify for every player that left
-	for _, player := range left {
+	for _, player := range playerStatus.Left {
 		msg := player.Name + " has left the game !"
 		log.Println(msg)
 		sendMessage(discord, channelID, msg)
