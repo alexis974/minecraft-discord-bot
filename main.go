@@ -13,9 +13,10 @@ func main() {
 	if err != nil {
 		log.Println("Could not load dotenv")
 	}
-	bot.BotToken = os.Getenv("BOT_TOKEN")
-	bot.GuildID = os.Getenv("GUILD_ID")
-	bot.ChannelName = os.Getenv("CHANNEL_NAME")
+
+	bot.BotToken = os.Getenv("DISCORD_BOT_TOKEN")
+	bot.GuildID = os.Getenv("DISCORD_GUILD_ID")
+	bot.ChannelName = os.Getenv("DISCORD_CHANNEL_NAME")
 	bot.MCServerHOST = os.Getenv("MINECRAFT_SERVER_HOST")
 	bot.Run()
 }

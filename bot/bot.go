@@ -9,10 +9,12 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-var BotToken string
-var GuildID string
-var ChannelName string
-var MCServerHOST string
+var (
+	BotToken     string
+	GuildID      string
+	ChannelName  string
+	MCServerHOST string
+)
 
 func checkNilErr(e error) {
 	if e != nil {
