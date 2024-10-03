@@ -9,6 +9,10 @@ import (
 )
 
 func main() {
+	if os.Getenv("DEBUG") == "TRUE" {
+		log.SetFlags(log.LstdFlags | log.Lshortfile)
+	}
+
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("Could not load dotenv")

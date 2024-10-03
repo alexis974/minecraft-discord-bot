@@ -5,15 +5,13 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 )
 
 func GetServerInfo(serverName string) MCServerInfo {
 	response, err := http.Get("http://api.mcsrvstat.us/3/" + serverName)
 
 	if err != nil {
-		log.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	responseData, err := io.ReadAll(response.Body)
