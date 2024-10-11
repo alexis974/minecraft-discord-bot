@@ -23,10 +23,10 @@ To get the bot up and running, you'll need to configure the following env variab
 ### Example Configuration
 
 ```env
-BOT_TOKEN=your_discord_bot_token
-GUILD_ID=your_discord_server_id
-CHANNEL_NAME=general
-MINECRAFT_SERVER_HOST=minecraft.example.com
+DISCORD_BOT_TOKEN="your_discord_bot_token"
+DISCORD_GUILD_ID="your_discord_server_id"
+DISCORD_CHANNEL_NAME="general"
+MINECRAFT_SERVER_HOST="minecraft.example.com"
 ```
 
 ## Docker Image
